@@ -1,10 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { EditUserContext } from "../../contexts/EditUserContext";
 
 import { UserContext } from "../../contexts/UserContext";
 
 export default function Userlist() {
-  const { users, setIsClicked, setIsEdit } = useContext(UserContext);
+  const { users, setUsers, setIsClicked, setIsEdit } = useContext(
+    UserContext
+  );
 
   const {
     setName,

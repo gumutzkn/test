@@ -1,11 +1,12 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { EditUserContext } from "../../contexts/EditUserContext";
 import { UserContext } from "../../contexts/UserContext";
 
 import "./edituser.css";
 
 export default function EditUser() {
-  const { users } = useContext(UserContext);
+  const { users, setUsers } = useContext(UserContext);
+
   const {
     name,
     username,
@@ -28,9 +29,6 @@ export default function EditUser() {
 
   function handleEmailChange(e) {
     setEmail(e.target.value);
-    const selectedUser = users.find(item => item.id === number);
-
-    selectedUser.email = e.target.value;
   }
 
   function handleCityChange(e) {
@@ -39,16 +37,15 @@ export default function EditUser() {
 
   function handleChangedUser(e) {
     e.preventDefault();
-    // console.log("target hit");
-    // const selectedUser = users.find(item => item.id === number);
-    users.forEach(user => {
-      if (user.id === number) {
-        console.log((user.name = ""));
-        user.name = "";
-      }
-    });
 
-    // selectedUser.name = "";
+    setUsers(prevUsers =>
+      prevUsers.map(user => {
+        if (user.id === number) {
+          return { ...user, name, username, email, city };
+        }
+        return user;
+      })
+    );
   }
 
   return (
@@ -95,6 +92,7 @@ export default function EditUser() {
             type="text"
             name="city"
             value={city}
+            required
           />
         </div>
         <button
