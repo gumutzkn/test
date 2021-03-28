@@ -1,20 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useForm } from "react-hook-form";
+import { UserContext } from "../../contexts/UserContext";
+import { v4 as uuidv4 } from "uuid";
 
 import "./form.css";
 
-const Form = ({ users, setUsers }) => {
+export default function Form() {
+  const { users, setUsers } = useContext(UserContext);
   const { register, handleSubmit, reset } = useForm();
 
-  const onSubmit = ({ name, username, email, city }) => {
-    setUsers([...users, { name, username, email, city }]);
+  function onSubmit({ name, username, email, city }) {
+    setUsers([
+      ...users,
+      { id: uuidv4(), name, username, email, address: { city } },
+    ]);
     reset();
     console.log(name);
-  };
+  }
 
   return (
     <div className="form">
-      <h4>User Detail Form</h4>
+      <h4>Add New User</h4>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="input-field">
           <label htmlFor="name">Name</label>
@@ -45,12 +51,10 @@ const Form = ({ users, setUsers }) => {
           className="btn waves-effect cyan waves-light right"
           type="submit"
           name="action">
-          Save
+          Add
           <i className="material-icons right">send</i>
         </button>
       </form>
     </div>
   );
-};
-
-export default Form;
+}

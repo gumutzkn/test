@@ -1,13 +1,31 @@
-import React from "react";
+import React, { useContext } from "react";
+import { EditUserContext } from "../../contexts/EditUserContext";
 
-const Userlist = ({ users, isClicked, setIsClicked }) => {
-  const onClick = e => {
-    let name = e.target.parentNode.parentNode.childNodes[0];
-    let userName = e.target.parentNode.parentNode.childNodes[1];
-    let email = e.target.parentNode.parentNode.childNodes[2];
+import { UserContext } from "../../contexts/UserContext";
 
-    setIsClicked(true);
-    console.log(e.target.parentNode.parentNode.childNodes[2]);
+export default function Userlist() {
+  const { users, setIsClicked, setIsEdit } = useContext(UserContext);
+
+  const {
+    setName,
+    setUserName,
+    setEmail,
+    setCity,
+    setNumber,
+  } = useContext(EditUserContext);
+
+  const editUser = id => {
+    const selectedItem = users.find(item => item.id === id);
+
+    console.log(selectedItem);
+
+    setIsEdit(true);
+    setIsClicked(false);
+    setName(selectedItem.name);
+    setUserName(selectedItem.username);
+    setEmail(selectedItem.email);
+    setNumber(id);
+    setCity(selectedItem.address.city);
   };
 
   return (
@@ -30,7 +48,7 @@ const Userlist = ({ users, isClicked, setIsClicked }) => {
                 <td>{user.username}</td>
                 <td>{user.email}</td>
                 <a
-                  onClick={onClick}
+                  onClick={() => editUser(user.id)}
                   style={{ marginTop: ".6rem" }}
                   className="btn-floating btn-small cyan">
                   <i className="material-icons">edit</i>
@@ -41,6 +59,4 @@ const Userlist = ({ users, isClicked, setIsClicked }) => {
       </table>
     </>
   );
-};
-
-export default Userlist;
+}

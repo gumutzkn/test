@@ -4,7 +4,7 @@ import { Link, useLocation } from "react-router-dom";
 
 import "./navbar.css";
 
-const Navbar = () => {
+export default function Navbar() {
   let location = useLocation();
 
   return (
@@ -27,6 +27,4 @@ const Navbar = () => {
       </nav>
     </div>
   );
-};
-
-export default Navbar;
+}

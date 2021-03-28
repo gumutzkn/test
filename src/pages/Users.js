@@ -1,49 +1,30 @@
-import React, { useState, useEffect } from "react";
+import React, { useContext } from "react";
+import EditUser from "../components/EditUser/editUser.component";
 import Form from "../components/Form/form.component";
 import Userlist from "../components/userList/userlist.component";
 
-const Users = () => {
-  const [users, setUsers] = useState([]);
-  const [isClicked, setIsClicked] = useState(false);
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
+import { UserContext } from "../contexts/UserContext";
 
-  useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/users")
-      .then(data => data.json())
-      .then(user => {
-        console.log(user);
-        setUsers(user);
-      });
-  }, []);
+export default function Users() {
+  const { users, isClicked, onClick, isEdit } = useContext(
+    UserContext
+  );
 
-  console.log(users);
-
-  const onClick = () => {
-    setIsClicked(!isClicked);
-  };
+  // console.log(users);
 
   return (
     <>
       {users.length > 0 ? (
         <>
-          <Userlist
-            isClicked={isClicked}
-            setIsClicked={setIsClicked}
-            users={users}
-          />
+          <Userlist />
           <a
             onClick={onClick}
             style={{ marginTop: "2rem", marginRight: "2rem" }}
             className="btn-floating btn-large waves-effect waves-light cyan pulse right">
             <i className="material-icons">add</i>
           </a>
-          {isClicked ? (
-            <Form users={users} setUsers={setUsers} />
-          ) : (
-            <div></div>
-          )}
+          {isClicked ? <Form /> : <div></div>}
+          {isEdit ? <EditUser /> : <div></div>}
         </>
       ) : (
         <div className="progress">
@@ -52,6 +33,4 @@ const Users = () => {
       )}
     </>
   );
-};
-
-export default Users;
+}

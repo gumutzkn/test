@@ -5,21 +5,25 @@ import {
 } from "react-router-dom";
 import "./App.css";
 import Navbar from "./components/Navbar/navbar.component";
+import EditUserContextProvider from "./contexts/EditUserContext";
+import UserContextProvider from "./contexts/UserContext";
 import Home from "./pages/Home";
 import Users from "./pages/Users";
 
-function App() {
+export default function App() {
   return (
-    <div className="container">
-      <Router>
-        <Navbar />
-        <Switch>
-          <Route exact path="/" component={Home} />
-          <Route path="/users" component={Users} />
-        </Switch>
-      </Router>
-    </div>
+    <EditUserContextProvider>
+      <UserContextProvider>
+        <div className="container">
+          <Router>
+            <Navbar />
+            <Switch>
+              <Route exact path="/" component={Home} />
+              <Route path="/users" component={Users} />
+            </Switch>
+          </Router>
+        </div>
+      </UserContextProvider>
+    </EditUserContextProvider>
   );
 }
-
-export default App;
