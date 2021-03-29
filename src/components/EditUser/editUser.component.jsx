@@ -2,10 +2,13 @@ import React, { useContext, useEffect } from "react";
 import { EditUserContext } from "../../contexts/EditUserContext";
 import { LangContext } from "../../contexts/LangContext";
 import { UserContext } from "../../contexts/UserContext";
+import useUnsavedChangesWarning from "../../hook/useUnsavedChangesWarning";
 
 import "./edituser.css";
 
 export default function EditUser() {
+  const [Prompt, setDirty, setPristine] = useUnsavedChangesWarning();
+
   const { setUsers } = useContext(UserContext);
   const { lang } = useContext(LangContext);
 
@@ -23,18 +26,22 @@ export default function EditUser() {
 
   function handleNameChange(e) {
     setName(e.target.value);
+    setDirty();
   }
 
   function handleUserNameChange(e) {
     setUserName(e.target.value);
+    setDirty();
   }
 
   function handleEmailChange(e) {
     setEmail(e.target.value);
+    setDirty();
   }
 
   function handleCityChange(e) {
     setCity(e.target.value);
+    setDirty();
   }
 
   function handleChangedUser(e) {
@@ -107,11 +114,13 @@ export default function EditUser() {
           style={{ margin: "2rem 1rem" }}
           className="btn waves-effect cyan waves-light right"
           type="submit"
+          onClick={() => setPristine()}
           name="action">
           {lang === "tr" ? "Kaydet" : "Save"}
           <i className="material-icons right">send</i>
         </button>
       </form>
+      {Prompt}
     </div>
   );
 }
