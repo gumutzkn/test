@@ -19,7 +19,7 @@ export default function Users() {
           <Userlist />
           <a
             onClick={onClick}
-            style={{ marginTop: "2rem", marginRight: "2rem" }}
+            style={{ marginTop: "2rem", marginRight: "2.3rem" }}
             className="btn-floating btn-large waves-effect waves-light cyan pulse right">
             <i className="material-icons">add</i>
           </a>

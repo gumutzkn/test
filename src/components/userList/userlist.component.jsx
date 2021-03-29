@@ -1,12 +1,12 @@
 import React, { useContext, useEffect } from "react";
 import { EditUserContext } from "../../contexts/EditUserContext";
+import { LangContext } from "../../contexts/LangContext";
 
 import { UserContext } from "../../contexts/UserContext";
 
 export default function Userlist() {
-  const { users, setUsers, setIsClicked, setIsEdit } = useContext(
-    UserContext
-  );
+  const { users, setIsClicked, setIsEdit } = useContext(UserContext);
+  const { lang } = useContext(LangContext);
 
   const {
     setName,
@@ -19,27 +19,34 @@ export default function Userlist() {
   const editUser = id => {
     const selectedItem = users.find(item => item.id === id);
 
-    console.log(selectedItem);
-
     setIsEdit(true);
     setIsClicked(false);
     setName(selectedItem.name);
     setUserName(selectedItem.username);
     setEmail(selectedItem.email);
-    setNumber(id);
     setCity(selectedItem.address.city);
+
+    setNumber(id);
   };
 
   return (
     <>
-      <h4>Users</h4>
+      <h4>{lang === "tr" ? "Kullanıcılar" : "Users"}</h4>
       <table className="highlight">
         <thead>
-          <tr>
-            <th>Name</th>
-            <th>Username</th>
-            <th>Email</th>
-          </tr>
+          {lang === "tr" ? (
+            <tr>
+              <th>İsim</th>
+              <th>Kullanıcı Adı</th>
+              <th>Email</th>
+            </tr>
+          ) : (
+            <tr>
+              <th>Name</th>
+              <th>Username</th>
+              <th>Email</th>
+            </tr>
+          )}
         </thead>
 
         <tbody>

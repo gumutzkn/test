@@ -1,11 +1,13 @@
 import React, { useContext, useEffect } from "react";
 import { EditUserContext } from "../../contexts/EditUserContext";
+import { LangContext } from "../../contexts/LangContext";
 import { UserContext } from "../../contexts/UserContext";
 
 import "./edituser.css";
 
 export default function EditUser() {
-  const { users, setUsers } = useContext(UserContext);
+  const { setUsers } = useContext(UserContext);
+  const { lang } = useContext(LangContext);
 
   const {
     name,
@@ -50,10 +52,12 @@ export default function EditUser() {
 
   return (
     <div className="edit">
-      <h4>Edit User</h4>
+      <h4>{lang === "tr" ? "Kullanıcıyı Güncelle" : "Edit User"}</h4>
       <form onSubmit={handleChangedUser}>
         <div className="input-field">
-          <label htmlFor="name">Name</label>
+          <label htmlFor="name">
+            {lang === "tr" ? "İsim" : "Name"}
+          </label>
           <input
             onChange={handleNameChange}
             type="text"
@@ -64,7 +68,9 @@ export default function EditUser() {
         </div>
 
         <div className="input-field">
-          <label htmlFor="username">Username</label>
+          <label htmlFor="username">
+            {lang === "tr" ? "Kullanıcı Adı" : "Username"}
+          </label>
           <input
             onChange={handleUserNameChange}
             type="text"
@@ -86,7 +92,9 @@ export default function EditUser() {
         </div>
 
         <div className="input-field">
-          <label htmlFor="city">City</label>
+          <label htmlFor="city">
+            {lang === "tr" ? "Şehir" : "City"}
+          </label>
           <input
             onChange={handleCityChange}
             type="text"
@@ -100,7 +108,7 @@ export default function EditUser() {
           className="btn waves-effect cyan waves-light right"
           type="submit"
           name="action">
-          Save
+          {lang === "tr" ? "Kaydet" : "Save"}
           <i className="material-icons right">send</i>
         </button>
       </form>

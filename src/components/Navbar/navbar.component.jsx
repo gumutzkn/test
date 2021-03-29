@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 
 import { Link, useLocation } from "react-router-dom";
+import { LangContext } from "../../contexts/LangContext";
 
 import "./navbar.css";
 
 export default function Navbar() {
   let location = useLocation();
+
+  const { lang } = useContext(LangContext);
 
   return (
     <div className="nav-cont">
@@ -13,11 +16,11 @@ export default function Navbar() {
         <div className="nav-wrapper">
           <div className="col s12">
             <Link to="/" className="breadcrumb">
-              Home
+              {lang === "tr" ? "Anasayfa" : "Home"}
             </Link>
             {location.pathname === "/users" ? (
               <Link to="/users" className="breadcrumb">
-                Users
+                {lang === "tr" ? "Kullanıcılar" : "Users"}
               </Link>
             ) : (
               <></>
